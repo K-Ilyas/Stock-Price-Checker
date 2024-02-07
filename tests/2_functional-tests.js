@@ -14,7 +14,9 @@ suite('Functional Tests', function () {
         chai
             .request(server)
             .keepOpen()
-            .get('/api/stock-prices/?stock=MSFT')
+            .get('/api/stock-prices/')
+            .set("content-type", "application/json")
+            .query({ stock: "MSFT" })
             .end(function (err, res) {
                 const { stock, price, likes } = res.body.stockData;
                 assert.equal(res.status, 200, 'Response status should be 200');
@@ -30,13 +32,14 @@ suite('Functional Tests', function () {
         chai
             .request(server)
             .keepOpen()
-            .get('/api/stock-prices/?stock=MSFT&like=true')
+            .get('/api/stock-prices/')
+            .set("content-type", "application/json")
+            .query({ stock: "MSFT", like: true })
             .end(function (err, res) {
                 const { stock, price, likes } = res.body.stockData;
                 assert.equal(res.status, 200, 'Response status should be 200');
                 assert.equal(stock, "MSFT");
                 assert.equal(price, 62.3);
-                console.log(likes);
                 assert.isNumber(likes, "the likes filed should be a valid Int");
                 CONST_LIKES = likes;
                 done();
@@ -49,7 +52,9 @@ suite('Functional Tests', function () {
         chai
             .request(server)
             .keepOpen()
-            .get('/api/stock-prices/?stock=MSFT&like=true')
+            .get('/api/stock-prices/')
+            .set("content-type", "application/json")
+            .query({ stock: "MSFT", like: true })
             .end(function (err, res) {
                 const { stock, price, likes } = res.body.stockData;
                 assert.equal(res.status, 200, 'Response status should be 200');
@@ -66,9 +71,11 @@ suite('Functional Tests', function () {
         chai
             .request(server)
             .keepOpen()
-            .get('/api/stock-prices/?stock=GOOG&stock=MSFT')
+            .get('/api/stock-prices/')
+            .set("content-type", "application/json")
+            .query({ stock: ["GOOG","MSFT"] })
             .end(function (err, res) {
-                
+
                 const { stock: stock_first, price: price_first, rel_likes: rel_likes_first } = res.body.stockData[0];
                 const { stock: stock_second, price: price_second, rel_likes: rel_likes_second } = res.body.stockData[1];
 
@@ -93,9 +100,11 @@ suite('Functional Tests', function () {
         chai
             .request(server)
             .keepOpen()
-            .get('/api/stock-prices/?stock=GOOG&stock=MSFT&like=true')
+            .get('/api/stock-prices/')
+            .set("content-type", "application/json")
+            .query({  stock: ["GOOG","MSFT"] ,like:true })
             .end(function (err, res) {
-                
+
                 const { stock: stock_first, price: price_first, rel_likes: rel_likes_first } = res.body.stockData[0];
                 const { stock: stock_second, price: price_second, rel_likes: rel_likes_second } = res.body.stockData[1];
 

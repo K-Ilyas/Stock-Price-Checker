@@ -31,7 +31,7 @@ var cors = require('cors');
 var fs = require('fs');
 var runner = require('../test-runner');
 
-module.exports = function (app) {
+module.exports = function (app,clinet) {
 
   app.route('/_api/server.js')
     .get(function(req, res, next) {

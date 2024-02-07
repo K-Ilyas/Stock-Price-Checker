@@ -10,7 +10,6 @@ const runner = require('./test-runner');
 const helmet = require("helmet");
 const app = express();
 
-
 const main = require("./connexion");
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -19,18 +18,17 @@ app.use(cors({ origin: '*' })); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(helmet());
-app.use(helmet({
-  frameguard: {         // configure
-    action: 'deny'
-  },
-  contentSecurityPolicy: {    // enable and configure
+
+//Allow script and CSS from own server only
+app.use(
+  helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
     }
-  },
-  dnsPrefetchControl: false
-}));
+  })
+);
 
 //Index page (static HTML)
 
@@ -38,6 +36,10 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
+
+
+fccTestingRoutes(app);
+
 
 //Routing for API 
 main(async (clinet, StockModel) => {
@@ -52,8 +54,6 @@ main(async (clinet, StockModel) => {
   });
 
   //For FCC testing purposes
-  fccTestingRoutes(app, clinet);
-
 });
 
 
