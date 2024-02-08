@@ -19,11 +19,11 @@ The following tests in tests/2_functional-tests.js are valid :
 6. If you pass along 2 stocks, the returned value will be an array with information about both stocks. Instead of likes, it will display rel_likes (the difference between the likes on both stocks) for both stockData objects.
 7. All 5 functional tests are complete and passing.
 ### Example usage:
-`/api/stock-prices?stock=GOOG
-/api/stock-prices?stock=GOOG&like=true
-/api/stock-prices?stock=GOOG&stock=MSFT
-/api/stock-prices?stock=GOOG&stock=MSFT&like=true`
+`/api/stock-prices?stock=GOOG`<br />
+`/api/stock-prices?stock=GOOG&like=true`<br />
+`/api/stock-prices?stock=GOOG&stock=MSFT`<br />
+`/api/stock-prices?stock=GOOG&stock=MSFT&like=true`
 
 ### Example return:
-`{"stockData":{"stock":"GOOG","price":786.90,"likes":1}}
-{"stockData":[{"stock":"MSFT","price":62.30,"rel_likes":-1},{"stock":"GOOG","price":786.90,"rel_likes":1}]}`
+`{"stockData":{"stock":"GOOG","price":786.90,"likes":1}}`<br />
+`{"stockData":[{"stock":"MSFT","price":62.30,"rel_likes":-1},{"stock":"GOOG","price":786.90,"rel_likes":1}]}`
